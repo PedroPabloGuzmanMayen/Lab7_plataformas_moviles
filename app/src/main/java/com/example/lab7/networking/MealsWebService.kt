@@ -1,4 +1,6 @@
 package com.example.lab7.networking
+import com.example.lab7.networking.response.MealRes
+import com.example.lab7.networking.response.Meals
 import com.example.lab7.networking.response.MealsCategoriesResponse
 import retrofit2.Retrofit
 import retrofit2.Call
@@ -19,5 +21,8 @@ class MealsWebService {
 
     fun getMeals(): Call<MealsCategoriesResponse> {
         return api.getMeals()
+    }
+    fun getMeal(): Call<Meals>{
+        return api.getSeaFood()
     }
 }
