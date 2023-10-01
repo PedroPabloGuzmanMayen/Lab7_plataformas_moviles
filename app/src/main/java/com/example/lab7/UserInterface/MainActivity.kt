@@ -1,4 +1,4 @@
-package com.example.lab7
+package com.example.lab7.UserInterface
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.lab7.ui.theme.Lab7Theme
+import com.example.lab7.UserInterface.Meals.MealsCategoriesScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    MealsCategoriesScreen()
                 }
             }
         }
