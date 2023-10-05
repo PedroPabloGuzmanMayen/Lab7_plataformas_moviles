@@ -1,4 +1,5 @@
-package com.example.lab7.UserInterface.Meals.Model
+package com.example.lab7.UserInterface.Recipe.Model
+
 
 import com.example.lab7.networking.MealsWebService
 import com.example.lab7.networking.response.MealsCategoriesResponse
@@ -6,8 +7,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MealsRepository(private val webService: MealsWebService = MealsWebService()) {
-    fun getMeals(successCallback: (response: MealsCategoriesResponse?) -> Unit) {
+class RecipeRepository(private val webService: MealsWebService = MealsWebService()) {
+    fun getRecipe(successCallback: (response: MealsCategoriesResponse?) -> Unit) {
         return webService.getMeals().enqueue(object : Callback<MealsCategoriesResponse> {
             override fun onResponse(
                 call: Call<MealsCategoriesResponse>,
