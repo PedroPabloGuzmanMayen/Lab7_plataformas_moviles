@@ -1,4 +1,7 @@
-package com.example.lab7.UserInterface.Meals.View
+package com.example.lab7.UserInterface.Filter.View
+
+import com.example.lab7.UserInterface.Filter.ViewModel.MealsFilterViewModel
+import com.example.lab7.networking.response.MealRes
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,42 +31,39 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
-import com.example.lab7.UserInterface.Meals.ViewModel.MealsCategoriesViewModel
+import com.example.lab7.UserInterface.Meals.View.slides
 import com.example.lab7.networking.response.MealResponse
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MealsCategoriesScreen() {
-    val viewModel: MealsCategoriesViewModel = viewModel()
-    val rememberedMeals: MutableState<List<MealResponse>> = remember { mutableStateOf(emptyList<MealResponse>()) }
-
-    viewModel.getMeals { response ->
-        val mealsFromTheApi = response?.categories
+fun MealsFilter(){
+    val viewmodel: MealsFilterViewModel = viewModel()
+    val rememberedMeals: MutableState<List<MealRes>> = remember { mutableStateOf(emptyList<MealRes>()) }
+    viewmodel.getSeaFood("Beef"){ response ->
+        val mealsFromTheApi = response?.meals
         rememberedMeals.value = mealsFromTheApi.orEmpty()
-    }
 
+    }
     Scaffold(
         topBar = {
             TopAppBar(title = {
-                Text(text = "Categorias", textAlign = TextAlign.Center, fontSize = 25.sp)
+                Text(text = "Recetas", textAlign = TextAlign.Center, fontSize = 25.sp)
             },
-            colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Magenta))
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Magenta))
         }
     ){ innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
             items(rememberedMeals.value) { meal ->
-                slides(meal)
+                cards(meal)
             }
         }
 
     }
-
-
 }
 
+
 @Composable
-fun slides(arg: MealResponse){
+fun cards(arg: MealRes){
     Card(modifier = Modifier
         .background(color = Color.LightGray, shape = RectangleShape)
         .border(2.dp, Color.Black, RectangleShape)
@@ -71,13 +71,12 @@ fun slides(arg: MealResponse){
         .fillMaxWidth()
         .height(60.dp)){
         Row(){
-            Image(painter = rememberAsyncImagePainter(model = arg.imageUrl), contentDescription = "Food" )
-            Text(arg.name)
+            Image(painter = rememberAsyncImagePainter(model = arg.mealThumb), contentDescription = "Food" )
+            Text(arg.meal)
 
         }
 
     }
-
 
 
 }

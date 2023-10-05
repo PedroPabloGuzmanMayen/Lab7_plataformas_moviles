@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.lab7.UserInterface.Meals.MealsCategoriesScreen
+import com.example.lab7.UserInterface.Meals.View.MealsCategoriesScreen
 
 @Composable
 fun AppNavigation(){

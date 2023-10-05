@@ -22,7 +22,7 @@ class MealsWebService {
     fun getMeals(): Call<MealsCategoriesResponse> {
         return api.getMeals()
     }
-    fun getMeal(): Call<Meals>{
-        return api.getSeaFood()
+    fun getSeaFood(category: String): Call<Meals>{
+        return api.getSeaFood(category)
     }
 }

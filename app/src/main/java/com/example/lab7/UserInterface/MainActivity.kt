@@ -10,8 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.lab7.Navigation.navigation.AppNavigation
 import com.example.lab7.ui.theme.Lab7Theme
-import com.example.lab7.UserInterface.Meals.MealsCategoriesScreen
+import com.example.lab7.UserInterface.Meals.View.MealsCategoriesScreen
+import com.example.lab7.UserInterface.Filter.View.MealsFilter
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MealsCategoriesScreen()
+                    MealsFilter()
                 }
             }
         }

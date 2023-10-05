@@ -1,4 +1,4 @@
-package com.example.lab7.UserInterface.Meals
+package com.example.lab7.UserInterface.Meals.Model
 
 import com.example.lab7.networking.MealsWebService
 import com.example.lab7.networking.response.MealsCategoriesResponse
