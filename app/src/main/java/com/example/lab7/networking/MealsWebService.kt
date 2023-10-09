@@ -2,6 +2,8 @@ package com.example.lab7.networking
 import com.example.lab7.networking.response.MealRes
 import com.example.lab7.networking.response.Meals
 import com.example.lab7.networking.response.MealsCategoriesResponse
+import com.example.lab7.networking.response.Recipe
+import com.example.lab7.networking.response.Recipes
 import retrofit2.Retrofit
 import retrofit2.Call
 import retrofit2.converter.gson.GsonConverterFactory
@@ -24,5 +26,9 @@ class MealsWebService {
     }
     fun getSeaFood(category: String): Call<Meals>{
         return api.getSeaFood(category)
+    }
+
+    fun getRecipe(id: String): Call<Recipes>{
+        return api.getRecipe(id)
     }
 }
