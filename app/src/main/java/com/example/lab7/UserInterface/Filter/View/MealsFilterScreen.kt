@@ -39,7 +39,7 @@ import com.example.lab7.networking.response.MealResponse
 fun MealsFilter(){
     val viewmodel: MealsFilterViewModel = viewModel()
     val rememberedMeals: MutableState<List<MealRes>> = remember { mutableStateOf(emptyList<MealRes>()) }
-    viewmodel.getSeaFood("Beef"){ response ->
+    viewmodel.getSeaFood("beef"){ response ->
         val mealsFromTheApi = response?.meals
         rememberedMeals.value = mealsFromTheApi.orEmpty()
 
