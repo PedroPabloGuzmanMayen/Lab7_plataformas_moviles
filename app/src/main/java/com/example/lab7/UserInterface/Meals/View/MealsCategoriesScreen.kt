@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.lab7.UserInterface.Meals.ViewModel.MealsCategoriesViewModel
 import com.example.lab7.networking.response.MealResponse
@@ -34,7 +35,7 @@ import com.example.lab7.networking.response.MealResponse
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MealsCategoriesScreen() {
+fun MealsCategoriesScreen(navController: NavController) {
     val viewModel: MealsCategoriesViewModel = viewModel()
     val rememberedMeals: MutableState<List<MealResponse>> = remember { mutableStateOf(emptyList<MealResponse>()) }
 
@@ -53,7 +54,7 @@ fun MealsCategoriesScreen() {
     ){ innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
             items(rememberedMeals.value) { meal ->
-                slides(meal)
+                slides(meal, navController)
             }
         }
 
@@ -63,13 +64,14 @@ fun MealsCategoriesScreen() {
 }
 
 @Composable
-fun slides(arg: MealResponse){
+fun slides(arg: MealResponse, navController: NavController){
     Card(modifier = Modifier
         .background(color = Color.LightGray, shape = RectangleShape)
         .border(2.dp, Color.Black, RectangleShape)
         .clickable(onClick = {})
         .fillMaxWidth()
-        .height(60.dp)){
+        .height(60.dp)
+        .clickable { navController.navigate("filter/${arg.name}") }){
         Row(){
             Image(painter = rememberAsyncImagePainter(model = arg.imageUrl), contentDescription = "Food" )
             Text(arg.name)
