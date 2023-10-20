@@ -10,6 +10,7 @@ class RecipesViewModel(private val repository: RecipesRepository = RecipesReposi
         repository.getRecipe(id) { response ->
             successCallback(response)
         }
+
     }
 }
 

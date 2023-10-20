@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.lab7.Navigation.navigation.AppNavigation
+import com.example.lab7.UserInterface.Recipe.View.RecipeView
 import com.example.lab7.ui.theme.Lab7Theme
 
 

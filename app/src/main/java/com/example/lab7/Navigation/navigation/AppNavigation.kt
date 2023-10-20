@@ -25,8 +25,11 @@ fun AppNavigation(){
         ){backStackEntry ->
             MealsFilter(navController, category = backStackEntry.arguments?.getString("category") )
         }
-        composable(route = AppScreen.Detail.route){
-            RecipeView("52944")
+        composable(route = AppScreen.Detail.route + "/{id}",
+            arguments = listOf(navArgument(name = "id") {
+                type = NavType.StringType }
+            )){backStackEntry ->
+            RecipeView(navController, id = backStackEntry.arguments?.getString("id"))
         }
     }
 }

@@ -69,7 +69,7 @@ fun MealsFilter(navController: NavController, category: String?) {
     ){ innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
             items(rememberedMeals.value) { meal ->
-                cards(meal)
+                cards(meal, navController)
             }
         }
 
@@ -78,11 +78,11 @@ fun MealsFilter(navController: NavController, category: String?) {
 
 
 @Composable
-fun cards(arg: MealRes){
+fun cards(arg: MealRes, navController: NavController){
     Card(modifier = Modifier
         .background(color = Color.LightGray, shape = RectangleShape)
         .border(2.dp, Color.Black, RectangleShape)
-        .clickable(onClick = {})
+        .clickable(onClick = {navController.navigate("detail/${arg.id}")})
         .fillMaxWidth()
         .height(60.dp)){
         Row(){
