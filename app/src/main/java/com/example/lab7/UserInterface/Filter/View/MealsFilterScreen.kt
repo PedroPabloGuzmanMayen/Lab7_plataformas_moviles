@@ -36,19 +36,19 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.lab7.UserInterface.Filter.ViewModel.RecipesViewModel
+import com.example.lab7.UserInterface.Meal
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MealsFilter(navController: NavController, category: String?) {
-    val viewmodel: MealsFilterViewModel = viewModel()
-    val cat = category.orEmpty()
-    val rememberedMeals: MutableState<List<MealRes>> = remember { mutableStateOf(emptyList<MealRes>()) }
-    viewmodel.getSeaFood(cat){ response ->
-        val mealsFromTheApi = response?.meals
-        rememberedMeals.value = mealsFromTheApi.orEmpty()
 
-    }
+    val cat = category.orEmpty()
+
+    val viewmodel: RecipesViewModel = viewModel()
+    viewmodel.category = cat
+    val rememberedMeals = viewmodel.recipeList.value
     Scaffold(
         topBar = {
             TopAppBar(title = {
@@ -68,7 +68,7 @@ fun MealsFilter(navController: NavController, category: String?) {
         }
     ){ innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            items(rememberedMeals.value) { meal ->
+            items(rememberedMeals) { meal ->
                 cards(meal, navController)
             }
         }
@@ -78,16 +78,16 @@ fun MealsFilter(navController: NavController, category: String?) {
 
 
 @Composable
-fun cards(arg: MealRes, navController: NavController){
+fun cards(arg: Meal, navController: NavController){
     Card(modifier = Modifier
         .background(color = Color.LightGray, shape = RectangleShape)
         .border(2.dp, Color.Black, RectangleShape)
-        .clickable(onClick = {navController.navigate("detail/${arg.id}")})
+        .clickable(onClick = {navController.navigate("detail/${arg.name}")})
         .fillMaxWidth()
         .height(60.dp)){
         Row(){
-            Image(painter = rememberAsyncImagePainter(model = arg.mealThumb), contentDescription = "Food" )
-            Text(arg.meal)
+            Image(painter = rememberAsyncImagePainter(model = arg.image), contentDescription = "Food" )
+            Text(arg.name)
 
         }
 
