@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.lab7.UserInterface.Categories
+import com.example.lab7.UserInterface.Meals.ViewModel.CategoriesViewModel
 import com.example.lab7.UserInterface.Meals.ViewModel.MealsCategoriesViewModel
 import com.example.lab7.networking.response.MealResponse
 
@@ -36,13 +38,8 @@ import com.example.lab7.networking.response.MealResponse
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MealsCategoriesScreen(navController: NavController) {
-    val viewModel: MealsCategoriesViewModel = viewModel()
-    val rememberedMeals: MutableState<List<MealResponse>> = remember { mutableStateOf(emptyList<MealResponse>()) }
-
-    viewModel.getMeals { response ->
-        val mealsFromTheApi = response?.categories
-        rememberedMeals.value = mealsFromTheApi.orEmpty()
-    }
+    val viewModel: CategoriesViewModel = viewModel()
+    val rememberedMeals = viewModel.categoriyList.value
 
     Scaffold(
         topBar = {
@@ -53,7 +50,7 @@ fun MealsCategoriesScreen(navController: NavController) {
         }
     ){ innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            items(rememberedMeals.value) { meal ->
+            items(rememberedMeals) { meal ->
                 slides(meal, navController)
             }
         }
@@ -64,7 +61,7 @@ fun MealsCategoriesScreen(navController: NavController) {
 }
 
 @Composable
-fun slides(arg: MealResponse, navController: NavController){
+fun slides(arg: Categories, navController: NavController){
     Card(modifier = Modifier
         .background(color = Color.LightGray, shape = RectangleShape)
         .border(2.dp, Color.Black, RectangleShape)
@@ -73,7 +70,7 @@ fun slides(arg: MealResponse, navController: NavController){
         .height(60.dp)
         .clickable { navController.navigate("filter/${arg.name}") }){
         Row(){
-            Image(painter = rememberAsyncImagePainter(model = arg.imageUrl), contentDescription = "Food" )
+            Image(painter = rememberAsyncImagePainter(model = arg.image), contentDescription = "Food" )
             Text(arg.name)
 
         }
