@@ -1,5 +1,6 @@
 package com.example.lab7.UserInterface
 
+import com.example.lab7.networking.response.Meals
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
@@ -24,29 +25,36 @@ class FirestoreRepository() {
         return allCategories
     }
 
-    suspend fun getRecipeList(category: String): MutableList<Meal>{
-        val recipes = db.collection("Categories").document(category).collection("Recipes").get().await()
-        val allRecipes = mutableListOf<Meal>()
-        for (recipe in recipes) {
-            allRecipes.add(
+    suspend fun getRecipeList(category: String): MutableList<Meal> {
+        val allrecipes = mutableListOf<Meal>()
+        val recipes = db.collection("Recipes").whereEqualTo("category", category).get().await()
+
+        for (recipe in recipes){
+            allrecipes.add(
                 Meal(
                     name = recipe.getString("name")!!,
                     instructions = recipe.getString("instructions")!!,
                     image = recipe.getString("image")!!
                 )
             )
+
         }
-        return allRecipes
+        return allrecipes
     }
 
-    suspend fun getRecipeDetail(category: String, recipe: String): Meal{
-        val recipeDetail = db.collection("Categories").document(category).collection("Recipes").document(recipe).get().await()
-        return Meal(
-            name = recipeDetail.getString("name")!!,
-            instructions = recipeDetail.getString("instructions")!!,
-            image = recipeDetail.getString("image")!!
+    suspend fun getRecipeDetail(recipe: String): Meal {
+
+
+        val query = db.collection("Recipes").document(recipe).get().await()
+        val meal: Meal = Meal(
+            name = query.getString("name")!!,
+            instructions = query.getString("instructions")!!,
+            image = query.getString("image")!!
         )
-    }
+        return meal
 
+    }
 }
+
+
 

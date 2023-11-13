@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
@@ -29,6 +31,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.lab7.UserInterface.Filter.View.cards
+import com.example.lab7.UserInterface.Meal
+import com.example.lab7.UserInterface.Recipe.ViewModel.DetailViewModel
 import com.example.lab7.UserInterface.Recipe.ViewModel.RecipesViewModel
 import com.example.lab7.networking.response.Recipe
 
@@ -36,13 +40,10 @@ import com.example.lab7.networking.response.Recipe
 @Composable
 fun RecipeView(navController: NavController, id : String?){
     val i = id.orEmpty()
-    val viewmodel: RecipesViewModel = viewModel()
-    val rememberedMeals: MutableState<List<Recipe>> = remember { mutableStateOf(emptyList<Recipe>()) }
-    viewmodel.getRecipe(i){ response ->
-        val mealsFromTheApi = response?.meals
-        rememberedMeals.value = mealsFromTheApi.orEmpty()
+    val viewmodel: DetailViewModel = viewModel()
+    viewmodel.name = i
+    val rememberedMeals: Meal = viewmodel.Meal
 
-    }
     Scaffold(
         topBar = {
             TopAppBar(title = {
@@ -61,19 +62,29 @@ fun RecipeView(navController: NavController, id : String?){
 
         }
     ){ innerPadding ->
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            items(rememberedMeals.value) { meal ->
-                content(meal)
-            }
+        Box(modifier = Modifier.padding(innerPadding)) {
+            content(rememberedMeals)
         }
+
+
+
 }
 }
 
 @Composable
-fun content(arg: Recipe){
-    Text(arg.name, fontSize = 25.sp, textAlign = TextAlign.Center, modifier = Modifier.padding(10.dp))
-    Spacer(modifier = Modifier.padding(10.dp))
-    Text(arg.instructions, fontSize = 15.sp, textAlign = TextAlign.Center, modifier = Modifier.padding(10.dp))
+fun content(arg: Meal){
+
+    LazyColumn(){
+        item {
+
+            Text(arg.name, fontSize = 25.sp, textAlign = TextAlign.Center, modifier = Modifier.padding(10.dp))
+            Spacer(modifier = Modifier.padding(10.dp))
+            Text(arg.instructions, fontSize = 15.sp, textAlign = TextAlign.Center, modifier = Modifier.padding(10.dp))
+
+        }
+
+    }
+
 }
 
 
